@@ -20,7 +20,8 @@
   },
   "homepage": "https://github.com/matheushpitz/Facial-Recognition-ReactJS#readme",
   "devDependencies": {
-    "concurrently": "^3.6.1"
+    "concurrently": "^3.6.1",
+    "dotenv": "^6.0.0"
   },
   "dependencies": {
     "express": "^4.16.3"
