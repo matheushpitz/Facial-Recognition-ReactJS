@@ -21,3 +21,6 @@ Para o cliente, nós possuimos o config.js que fica dentro da pasta do `client` 
 export const SERVER_HOST = 'http://localhost:8080';
 ```
 Caso venha a ser alterado a porta ou o endereço do servidor, o mesmo deve ser alterado nesse arquivo para o bom funcionamento do sistema.
+
+#### Instalando as dependências e rodando o sistema.
+Agora vamos instalar todas as dependências do nosso projeto, para isso entre na raiz do projeto e execute o comando `npm run setup`. Após isso, todas as dependências já estarão instaladas, agora podemos rodar o nosso projeto com o comando `npm run start`. Com isso, o nosso sistema já estará rodando, você poderá acessa-lo através do endereço `localhost:3000`.
