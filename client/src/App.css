@@ -51,12 +51,18 @@
 .face-detection-text {
 	text-align: center;
 	color: white;
+	font-weight: bold;
+	font-size: 18px;	
 }
 
 .image-descriptor {
 	max-height: 600px;
 	overflow: auto;
 	margin-top: 30px;	
+}
+
+.collection-header {
+	font-weight: bold;
 }
 
 .div-loader {
