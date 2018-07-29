@@ -4,8 +4,10 @@ import {ImageDescriptor} from './ImageDescriptor';
 import PropTypes from 'prop-types';
 
 function handleChange(e) {
+	// get the files.
 	let files = e.target.files;
-	if(files !== undefined && files[0] !== undefined) {			
+	if(files !== undefined && files[0] !== undefined) {	
+		// Create File Reader.
 		let fr = new FileReader();
 		fr.onload = (ev) => {			
 			// Set the state
@@ -20,9 +22,10 @@ function handleChange(e) {
 class ImageLoader extends React.Component {
 	
 	constructor(props) {
+		// call teh super.
 		super(props);
 		this.state = {imageSrc: '/img/no-image.jpg'};
-		
+		// bind
 		this.handleChange = handleChange.bind(this);
 	}
 	

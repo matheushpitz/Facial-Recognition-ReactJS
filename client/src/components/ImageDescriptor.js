@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export const ImageDescriptor = (props) => {
-	
+	// make the elements.
 	let descriptions = props.facesData.map((elem, index) => {
 		return(			
-			<ul className="collection with-header">
+			<ul key={index} className="collection with-header">
 				<li className="collection-header">Face {index}</li>
 				<li className="collection-header">Gender</li>
 				<li className="collection-item">{elem.gender.gender}</li>

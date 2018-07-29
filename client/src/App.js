@@ -4,8 +4,10 @@ import Axios from 'axios';
 import {SERVER_HOST} from './config/config';
 import './App.css';
 
-function handleImageLoader(img) {		
-	this.axiosInstance.post('/', {image: img}).then((res) => {		
+function handleImageLoader(img) {	
+	// call axios.
+	this.axiosInstance.post('/', {image: img}).then((res) => {	
+		// set state when server responses.
 		this.setState({
 			facesData: res.data.images[0].faces,
 			loading: false
@@ -14,6 +16,7 @@ function handleImageLoader(img) {
 		alert('error');
 	});
 
+	// Remove all faces and enable loading.
 	this.setState({
 		facesData: [],
 		loading: true
