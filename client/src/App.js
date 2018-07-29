@@ -5,11 +5,19 @@ import {SERVER_HOST} from './config/config';
 import './App.css';
 
 function handleImageLoader(img) {		
-	this.axiosInstance.post('/', {image: img}).then((res) => {
-		alert(JSON.stringify(res));
+	this.axiosInstance.post('/', {image: img}).then((res) => {		
+		this.setState({
+			facesData: res.data.images[0].faces,
+			loading: false
+		});
 	}).catch((err) => {
 		alert('error');
-	});	
+	});
+
+	this.setState({
+		facesData: [],
+		loading: true
+	});
 }
 
 class App extends Component {
@@ -18,7 +26,10 @@ class App extends Component {
 		// call super constructor.
 		super(props);
 		// initialize state.
-		this.state = {};
+		this.state = {
+			facesData: [],
+			loading: false
+		};
 		
 		// Create a instance of Axios.
 		this.axiosInstance = Axios.create({
@@ -31,7 +42,7 @@ class App extends Component {
 	
 	render() {
 		return (
-			<ImageLoader onImageLoad={img => this.handleImageLoader(img)} />
+			<ImageLoader facesData={this.state.facesData} onImageLoad={img => this.handleImageLoader(img)} />
 		);
 	}		
 }

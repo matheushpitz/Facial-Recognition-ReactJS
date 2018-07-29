@@ -1,4 +1,6 @@
 import React from 'react';
+import ImagePreview from './ImagePreview';
+import {ImageDescriptor} from './ImageDescriptor';
 import PropTypes from 'prop-types';
 
 function handleChange(e) {
@@ -19,7 +21,7 @@ class ImageLoader extends React.Component {
 	
 	constructor(props) {
 		super(props);
-		this.state = {imageSrc: ''};
+		this.state = {imageSrc: '/img/no-image.jpg'};
 		
 		this.handleChange = handleChange.bind(this);
 	}
@@ -27,8 +29,9 @@ class ImageLoader extends React.Component {
 	render() {
 		return(
 			<div className={this.props.className}>
-				<img className={'image-preview'} src={this.state.imageSrc} />
+				<ImagePreview src={this.state.imageSrc} facesData={this.props.facesData} />
 				<input className={'image-input-file'} type={'file'} onChange={e => this.handleChange(e)} />
+				<ImageDescriptor facesData={this.props.facesData} />
 			</div>
 		);
 	}
@@ -36,12 +39,14 @@ class ImageLoader extends React.Component {
 
 ImageLoader.propTypes = {
 	onImageLoad: PropTypes.func.isRequired,
-	className: PropTypes.string
+	className: PropTypes.string,
+	facesData: PropTypes.array
 };
 
 ImageLoader.defaultProps = {
 	onImageLoad: () => {return},
-	className: 'image-loader'
+	className: 'image-loader',
+	facesData: []
 };
 
 export default ImageLoader;

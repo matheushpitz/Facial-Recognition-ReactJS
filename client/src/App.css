@@ -30,3 +30,13 @@
 .image-preview{
 	width:400px;
 }
+
+.face-detection-box {
+	position: absolute;
+	border: 3px dashed white;
+}
+
+.face-detection-text {
+	text-align: center;
+	color: white;
+}
