@@ -1,21 +1,39 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import ImageLoader from './components/ImageLoader';
+import Axios from 'axios';
+import {SERVER_HOST} from './config/config';
 import './App.css';
 
+function handleImageLoader(img) {		
+	this.axiosInstance.post('/', {image: img}).then((res) => {
+		alert(JSON.stringify(res));
+	}).catch((err) => {
+		alert('error');
+	});	
+}
+
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
+	
+	constructor(props) {
+		// call super constructor.
+		super(props);
+		// initialize state.
+		this.state = {};
+		
+		// Create a instance of Axios.
+		this.axiosInstance = Axios.create({
+			baseURL: SERVER_HOST,
+			headers: {'Content-Type': 'application/json'}
+		});
+		// Bind functions.
+		this.handleImageLoader = handleImageLoader.bind(this);
+	}
+	
+	render() {
+		return (
+			<ImageLoader onImageLoad={img => this.handleImageLoader(img)} />
+		);
+	}		
 }
 
 export default App;
