@@ -29,9 +29,13 @@ class ImageLoader extends React.Component {
 	render() {
 		return(
 			<div className={this.props.className}>
-				<ImagePreview src={this.state.imageSrc} facesData={this.props.facesData} />
-				<input className={'image-input-file'} type={'file'} onChange={e => this.handleChange(e)} />
-				<ImageDescriptor facesData={this.props.facesData} />
+				<div className="image-loader-inner-div">
+					<ImagePreview src={this.state.imageSrc} facesData={this.props.facesData} />
+					<input className={'image-input-file'} type={'file'} onChange={e => this.handleChange(e)} />
+				</div>
+				<div>
+					<ImageDescriptor facesData={this.props.facesData} />
+				</div>
 			</div>
 		);
 	}

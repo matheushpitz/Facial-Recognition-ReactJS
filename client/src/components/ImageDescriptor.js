@@ -4,16 +4,16 @@ import PropTypes from 'prop-types';
 export const ImageDescriptor = (props) => {
 	
 	let descriptions = props.facesData.map((elem, index) => {
-		return(
-			<div>
-				<h2>Face {index}</h2>
-				<h3>Gender</h3>
-				<p>{elem.gender.gender}</p>
-				<p>{Math.floor(elem.gender.score * 100)}%</p>
-				<h3>Age</h3>
-				<p>Between {elem.age.min} and {elem.age.max}</p>
-				<p>{Math.floor(elem.age.score * 100)}%</p>
-			</div>
+		return(			
+			<ul className="collection with-header">
+				<li className="collection-header">Face {index}</li>
+				<li className="collection-header">Gender</li>
+				<li className="collection-item">{elem.gender.gender}</li>
+				<li className="collection-item">{Math.floor(elem.gender.score * 100)}%</li>
+				<li className="collection-header">Age</li>
+				<li className="collection-item">Between {elem.age.min} and {elem.age.max}</li>
+				<li className="collection-item">{Math.floor(elem.age.score * 100)}%</li>
+			</ul>							
 		);
 	});
 	

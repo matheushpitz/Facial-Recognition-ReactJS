@@ -20,6 +20,16 @@ function handleImageLoader(img) {
 	});
 }
 
+function renderLoading() {
+	if(this.state.loading) {
+		return(
+			<div className={'div-loader'}>
+				<div className="loader"></div>
+			</div>
+		);
+	}
+}
+
 class App extends Component {
 	
 	constructor(props) {
@@ -38,11 +48,15 @@ class App extends Component {
 		});
 		// Bind functions.
 		this.handleImageLoader = handleImageLoader.bind(this);
+		this.renderLoading = renderLoading.bind(this);
 	}
 	
 	render() {
 		return (
-			<ImageLoader facesData={this.state.facesData} onImageLoad={img => this.handleImageLoader(img)} />
+			<div>
+				{this.renderLoading()}
+				<ImageLoader facesData={this.state.facesData} onImageLoad={img => this.handleImageLoader(img)} />
+			</div>
 		);
 	}		
 }
