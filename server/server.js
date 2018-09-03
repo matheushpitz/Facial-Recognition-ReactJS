@@ -1,77 +1,72 @@
-const BodyParser = require('body-parser');
-const fs = require('fs');
+const bodyParser = require('body-parser');
 const VisualRecognitionV3 = require('watson-developer-cloud/visual-recognition/v3');
+const temp = require('./TempHandle');
 
-module.exports = function(app, port) {
-
-	function createTempImage(base64Image, callback) {
-		// get the image data and extension.
-		let dataFile = base64Image.split(';base64,');
-		dataFile[0] = dataFile[0].split('/').pop();
-		// generate filename.
-		let filename = 'temp_'+((new Date()).getTime())+'.'+dataFile[0];
-		// save the image temp.
-		fs.writeFile('./temp/'+filename, dataFile[1], {encoding: 'base64'}, function(err) {
-			if(err) {
-				console.log('Error when create file.');
-			} else {				
-				console.log('File created '+filename);
-				// call the callback
-				callback(filename);
-			}
-		});	
-	}
+module.exports = (app, port) => {
+    // Start TempHandle
+    temp.startTempHandle();
 	
-	function doDetectFaces(base64Image, callback) {
-		// create the temp.
-		createTempImage(base64Image, (filename) => {
-			// initialize recognition instance.
-			let visualRecognition = new VisualRecognitionV3({
-				version: '2018-03-19',
-				iam_apikey: process.env.IAM_APIKEY
-			});				
-			// instance parameters.
-			let params = {
-				images_file: fs.createReadStream('./temp/'+filename)
-			};
-			// call the API.
-			visualRecognition.detectFaces(params, (err, res) => {
-				if(err) {
-					console.log(err);
-				} else {
-					// call the callback
-					callback(res);	
-					// remove the temp.
-					fs.unlink('./temp/'+filename, (err) => {
-						if(err != undefined)
-							console.log('Error on remove temp file.');
-					});
-				}
-			});
+	function doDetectFaces(base64Image) {
+		return new Promise((resolve, reject) => {
+            temp.createTempBase64(base64Image).then((id) => {
+				// initialize recognition instance.
+				let visualRecognition = new VisualRecognitionV3({
+					version: '2018-03-19',
+					iam_apikey: process.env.IAM_APIKEY
+				});
+                // instance parameters.
+                let params = {
+                    images_file: temp.readTemp(id)
+                };
+                // call the API.
+                visualRecognition.detectFaces(params, (err, res) => {
+                    if(err) {
+                        console.log(err);
+                        // Reject it
+                        reject(err);
+                    } else {
+                        // Resolve it
+                        resolve(res);
+                        // delete the temp file.
+                        temp.deleteTemp(id).catch(() => {
+                            console.log('Error on remove temp file.');
+                        });
+                    }
+                });
+			}).catch((err) => {
+			    console.log('Error when it tried to create the Temp File. '+err);
+			    reject(err);
+            });
 		});
 	}
 	
 	// Allow CORS.
 	app.use(function(req, res, next) {
-		res.header("Access-Control-Allow-Origin", "*");
+	    // Just allow for our application and POST requests.
+		res.header("Access-Control-Allow-Origin", "http://localhost:3000");
 		res.header('Access-Control-Allow-Methods', 'POST');
 		res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 		if(req.method === 'OPTIONS') {
+		    // If it is a OPTION request, send a 200 response.
 			res.status(200).send('success');
 			return;
 		}
+		// If it is not a OPTION request, keep going.
 		next();
 	});
-	
-	app.use(BodyParser.json({limit: '10mb'}));
-	app.use(BodyParser.urlencoded( {limit: '10mb', entended: true} ));
-	
+	// Parse our body to JSON and limit it at most 10MB.
+	app.use(bodyParser.json({limit: '10mb'}));
+
+	// Create our service.
 	app.post('', (req, res) => {
 		// Detect faces API.
-		doDetectFaces(req.body.image, (response) => {
+		doDetectFaces(req.body.image).then((response) => {
 			// send the response.
 			res.send(response);
-		});		
+		}).catch((err) => {
+		    // Send 500 status
+		    res.status(500).send('Internal Error');
+        });
 	});
 	
 	app.listen(port, () => console.log(`Listening on port ${port}`));

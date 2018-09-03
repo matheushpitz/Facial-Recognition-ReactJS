@@ -1,1 +1,0 @@
-This is the temp, here the images are uploaded and storage for send to Watson. After that, all of them are removed.
