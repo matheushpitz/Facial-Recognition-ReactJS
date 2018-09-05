@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ImageLoader from './components/ImageLoader';
 import Axios from 'axios';
 import {SERVER_HOST} from './config/config';
+import FRUploader from './components/FRUploader';
 import './App.css';
 
 function handleImageLoader(img) {	
@@ -57,6 +58,7 @@ class App extends Component {
 	render() {
 		return (
 			<div>
+                <FRUploader />
 				{this.renderLoading()}
 				<ImageLoader facesData={this.state.facesData} onImageLoad={img => this.handleImageLoader(img)} />
 			</div>
