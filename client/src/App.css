@@ -98,9 +98,32 @@ div.app {
 	text-align: center;
 }
 
-img.upload-image {
-	max-width: 500px;
-	max-height: 500px;
+div.uploader {
+    position: relative;
+    margin: auto;
+}
 
+.upload-image {
+    max-width: 500px;
+}
+
+img.upload-image {
     border-radius: 10px;
+}
+
+div.face-box {
+	position: absolute;
+	border: #ffffff dashed 3px;
+}
+
+div.face-box:hover {
+    background-color: rgba(255, 255, 255, 0.29);
+}
+
+p.face-name {
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    text-shadow: 0px 0px 3px #000000;
 }

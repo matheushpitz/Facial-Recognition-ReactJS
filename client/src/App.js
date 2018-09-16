@@ -42,7 +42,7 @@ class App extends Component {
 	render() {
 		return (
 			<div className="app">
-                <FRUploader onChange={e => this.handleImageLoader(e)} />
+                <FRUploader faces={this.state.facesData} onChange={e => this.handleImageLoader(e)} />
 			</div>
 		);
 	}		
