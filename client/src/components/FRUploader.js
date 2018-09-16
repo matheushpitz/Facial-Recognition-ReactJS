@@ -30,7 +30,7 @@ class FRUploader extends React.Component {
 
 const ImagePreview = props => {
     return(
-        <img src={props.src} alt={'Preview'} />
+        <img className="upload-image" src={props.src} alt={'Preview'} />
     );
 }
 

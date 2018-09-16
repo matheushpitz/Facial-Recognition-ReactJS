@@ -21,6 +21,7 @@
 .App-intro {
   font-size: large;
 }
+/* OLD ONE*/
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
@@ -88,4 +89,18 @@
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+/* OLD ONE*/
+
+div.app {
+	margin: auto;
+	text-align: center;
+}
+
+img.upload-image {
+	max-width: 500px;
+	max-height: 500px;
+
+    border-radius: 10px;
 }
