@@ -48,7 +48,7 @@ class FRUploader extends React.Component {
         return(
             <div className="upload-image uploader">
                 <img className="upload-image" src={this.state.img} alt={'Preview'} onLoad={(e) => this.loadHandle(e)} />
-                <FileUploader onChange={(e) => this.changeHandle(e)}/>
+                <FileUploader loading={this.props.loading} onChange={(e) => this.changeHandle(e)}/>
                 {this.props.faces.map( (e, index) => this.renderFace(e['face_location'], index) )}
             </div>
         );
@@ -62,27 +62,31 @@ const FileUploader = props => {
     return(
         <div>
             <input type={'file'} ref={fileRef} onChange={props.onChange} style={{display: 'none'}} />
-            <button onClick={() => fileRef.current.click()}>Upload</button>
+            <button onClick={props.loading ? undefined : () => fileRef.current.click()}>{props.loading ? 'Loading...' : 'Upload'}</button>
         </div>
     );
 }
 
 FRUploader.propTypes = {
     onChange: PropTypes.func,
-    faces: PropTypes.array
+    faces: PropTypes.array,
+    loading: PropTypes.bool
 };
 
 FRUploader.defaultProps = {
     onChange: () => {},
-    faces: []
+    faces: [],
+    loading: false
 };
 
 FileUploader.propTypes = {
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    loading: PropTypes.bool
 };
 
 FileUploader.defaultProps = {
-    onChange: () => {}
+    onChange: () => {},
+    loading: false
 };
 
 export default FRUploader;
