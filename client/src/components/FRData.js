@@ -9,9 +9,9 @@ const FRData = props => {
         <table className="face-table">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Gender</th>
+                    <th>Name</th>                    
                     <th>Age</th>
+					<th>Gender</th>
                 </tr>
             </thead>
             <tbody>
